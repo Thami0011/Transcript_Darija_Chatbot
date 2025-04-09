@@ -27,3 +27,4 @@ Include/
 Lib/
 share/
 Scripts/
+pyenv.cfg
