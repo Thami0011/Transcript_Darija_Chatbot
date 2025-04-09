@@ -1,8 +1,6 @@
 from model.transcribe import speech_to_text
 from model.darija_audio_transcript import darija_transcript
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import torch
 import logging
 
