@@ -5,6 +5,10 @@ model = AutoModelForSeq2SeqLM.from_pretrained("darija_to_french_model")
 
 def translate_darija_to_french(darija_input: str) -> str:
 
+    """
+    Translate the input from Moroccan Darija to French using Custom Helsiniki model.
+    """
+
     # Tokenize the input
     inputs = tokenizer(darija_input, return_tensors="pt", max_length=256, truncation=True)
 

@@ -3,6 +3,16 @@ import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 
 def darija_transcript(audio_file_path):
+    
+    """
+    Transcribe Moroccan Darija audio to text using Wav2Vec2 model from HuggingFace.
+    Accepts only .wav files.
+    Args:
+        audio_file_path (str): Path to the audio file.
+    Returns:
+        tuple: (Transcribed text, Confidence score of the transcription)
+    """
+    
     # Load tokenizer and processor
     # tokenizer = Wav2Vec2CTCTokenizer.from_pretrained("darija_transcript", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token="|")
     processor = Wav2Vec2Processor.from_pretrained("boumehdi/wav2vec2-large-xlsr-moroccan-darija")
