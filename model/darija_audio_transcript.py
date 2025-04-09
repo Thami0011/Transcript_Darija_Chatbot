@@ -2,7 +2,6 @@ import librosa
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
 
-
 def darija_transcript(audio_file_path):
     # Load tokenizer and processor
     # tokenizer = Wav2Vec2CTCTokenizer.from_pretrained("darija_transcript", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token="|")
