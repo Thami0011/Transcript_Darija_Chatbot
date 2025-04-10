@@ -8,7 +8,8 @@ import json
 import os
 import logging
 
-from transcript_decision import transcription_decision
+from utils import readFile
+from model.transcript_decision import transcription_decision
 
 
 # Logging Configuration
@@ -18,8 +19,11 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 OLLAMA_URL = "http://localhost:11434/api/generate"
-TEMP_DIR = Path("temp")
+TEMP_DIR = Path("model\\temp")
 TEMP_DIR.mkdir(exist_ok=True)
+MAIN_SYSTEM_PROMPT = readFile("Prompts\\MAIN_REQUEST_PROMPT.txt")
+TRANSLATION_PROMPT = readFile("Prompts\\TRANSLATION_PROMPT.txt")
+
 
 # FastAPI app initialization
 app = FastAPI()
@@ -40,14 +44,7 @@ class VoiceMessage(BaseModel):
 class RequestMessage(BaseModel):
     prompt: str
 
-# Prompts système
-MAIN_SYSTEM_PROMPT = (
-    """"
-"""""
-
-)
-
-TRANSLATION_PROMPT 
+ 
 # Utils
 def generate_response(prompt: str, system_prompt: str) -> str:
     data = {
@@ -91,7 +88,7 @@ async def communicate_with_llama(request: RequestMessage):
     try:
         response_text = generate_response(request.prompt, MAIN_SYSTEM_PROMPT)
         translated_text = detect_and_translate(request.prompt)
-
+        logger.info(f"Response generated: {response_text}")
         return {"response": response_text, "translation": translated_text}
 
     except Exception as e:
