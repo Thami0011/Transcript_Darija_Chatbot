@@ -8,8 +8,8 @@ import json
 import os
 import logging
 
-from translate import translate_darija_to_french
 from transcript_decision import transcription_decision
+
 
 # Logging Configuration
 logging.basicConfig(level=logging.INFO)
@@ -22,8 +22,8 @@ TEMP_DIR = Path("temp")
 TEMP_DIR.mkdir(exist_ok=True)
 
 # FastAPI app initialization
-app = FastAPI(logger.info("FastAPI app initialized"))
-
+app = FastAPI()
+logger.info("FastAPI app initialized")
 # CORS settings
 app.add_middleware(
     CORSMiddleware,
@@ -43,36 +43,11 @@ class RequestMessage(BaseModel):
 # Prompts système
 MAIN_SYSTEM_PROMPT = (
     """"
-You are a chatbot assistant in AttijariWafaBank, a leading bank in Morocco. Your role is to assist the user with banking-related issues, answer questions about services, and handle any problems or suggestions the user might have in the context of banking. You should always maintain a professional and helpful tone while providing relevant information.
-
-User Instruction:
-
-If the user’s request relates to banking services, financial inquiries, or any relevant issue within the scope of the bank, respond appropriately and assist them.
-
-If the request does not relate to banking or financial services, respond with the following message: "Désolé, je ne peux pas vous assister en ceci !"
-
-Behavior Guidelines:
-
-Always stay within the scope of banking and financial services.
-
-Handle user queries related to accounts, loans, transactions, banking products, etc.
-
-Offer guidance on the usage of mobile banking apps, online services, and any updates related to the bank’s offerings.
-
-If the query is outside the scope, politely redirect the user with the specified phrase: "Désolé, je ne peux pas vous assister en ceci !"
-
-Examples:
-
-User Request: "Comment puis-je ouvrir un compte courant chez AttijariWafaBank ?" Response: "Pour ouvrir un compte courant chez AttijariWafaBank, vous pouvez vous rendre dans l'une de nos agences ou vous inscrire directement via notre application mobile. Avez-vous besoin d’aide pour cela ?"
-
-User Request: "Quels sont les taux d'intérêt pour les prêts immobiliers ?" Response: "Les taux d'intérêt pour les prêts immobiliers chez AttijariWafaBank varient en fonction du montant et de la durée du prêt. Je peux vous fournir plus de détails ou vous orienter vers notre équipe spécialisée si vous le souhaitez."
-
-User Request: "J'ai des questions sur les crypto-monnaies." Response: "Désolé, je ne peux pas vous assister en ceci !"""""
+"""""
 
 )
 
-TRANSLATION_PROMPT = "Traduis le texte en francais, quelque soit la langue source."
-
+TRANSLATION_PROMPT 
 # Utils
 def generate_response(prompt: str, system_prompt: str) -> str:
     data = {
@@ -92,7 +67,6 @@ def generate_response(prompt: str, system_prompt: str) -> str:
                 full_response += fragment.get("response", "")
                 if fragment.get("done", False):
                     break
-        logger.info(f"Response generated: {full_response}")
         return full_response
 
     except requests.exceptions.RequestException as e:
@@ -102,11 +76,11 @@ def generate_response(prompt: str, system_prompt: str) -> str:
 
 def detect_and_translate(message: str) -> str:
     translation = generate_response(message, TRANSLATION_PROMPT)
-
-    # Si la langue détectée est l’arabe, on applique une traduction personnalisée
-    if langdetect.detect(translation) == "ar":
-        logger.info("Detected Arabic language, applying custom translation.")
-        translation = translate_darija_to_french(translation)
+    # translation = message
+    # # Si la langue détectée est l’arabe, on applique une traduction personnalisée
+    # if langdetect.detect(translation) == "ar":
+    #     logger.info("Detected Arabic language, applying custom translation.")
+    #     translation = darija_english_translation(translation)
     logger.info(f"Translation result: {translation}")
     return translation
 
@@ -139,12 +113,13 @@ async def communicate_with_voice(record: UploadFile = File(...)):
         # Transcription
         user_input = str(transcription_decision(file_path))
 
-        # Nettoyage du fichier
-        os.remove(file_path)
-        logger.info(f"Temporary file {file_path} deleted and removed.")
+        if user_input:
+            os.remove(file_path)
+            logger.info(f"Temporary file {file_path} deleted.")
 
         # Génération de réponse et traduction
         response_text = generate_response(user_input, MAIN_SYSTEM_PROMPT)
+        logger.info(f"Response generated: {response_text}")
         translated_text = detect_and_translate(user_input)
 
         return {"response": response_text, "translation": translated_text}

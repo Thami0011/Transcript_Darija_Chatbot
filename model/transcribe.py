@@ -1,5 +1,10 @@
 from whisper import load_model, transcribe
 from whisper.audio import load_audio
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def speech_to_text(audio_file_path: str, model_size: str = "base") -> tuple:
 
@@ -24,6 +29,8 @@ def speech_to_text(audio_file_path: str, model_size: str = "base") -> tuple:
     
     # Convert log probability to confidence (0 to 1)
     whisper_conf = (1 + avg_confidence) / 2  # Normalize logprob (-1 to 0) to (0 to 1)
+
+    logging.info(f"French Transcription: {result['text']}")
     
     # Return the transcribed text and confidence score
     return result["text"], whisper_conf

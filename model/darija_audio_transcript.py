@@ -1,6 +1,11 @@
 import librosa
+import logging
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def darija_transcript(audio_file_path):
     
@@ -35,5 +40,7 @@ def darija_transcript(audio_file_path):
     # Decode predicted tokens
     predicted_ids = torch.argmax(logits, dim=-1)
     transcription = processor.batch_decode(predicted_ids)
+
+    logger.info(f"Arabic Transcription: {transcription[0]}")
      
     return transcription[0], avg_confidence

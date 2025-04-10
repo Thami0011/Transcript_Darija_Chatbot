@@ -32,7 +32,7 @@ def transcription_decision(path_to_file):
     
     logger.info(f"Whisper Perplexity: {whisper_perplexity}")
 
-    if whisper_perplexity < 300:
+    if whisper_perplexity < 150:
         logger.info("Transcription using Whisper")
         return whisper_text 
     else:
