@@ -1,5 +1,5 @@
-from model.transcribe import speech_to_text
-from model.darija_audio_transcript import darija_transcript
+from app.model.transcribe import speech_to_text
+from app.model.darija_audio_transcript import darija_transcript
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
 import logging

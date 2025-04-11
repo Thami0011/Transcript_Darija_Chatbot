@@ -30,7 +30,7 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
         try:
             # Ajoute le message système une seule fois
             if not context_history or context_history[0]["role"] != "system":
-                system_prompt = read_file("Prompts/MAIN_REQUEST_PROMPT.txt")
+                system_prompt = read_file("app\\Prompts\\MAIN_REQUEST_PROMPT.txt")
                 context_history.insert(0, {"role": "system", "content": system_prompt})
             
             context_history.append({"role": "user", "content": prompt})
@@ -50,7 +50,7 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
 
     else:
         try:
-            system_prompt = read_file("Prompts/TRANSLATION_PROMPT.txt")
+            system_prompt = read_file("app\\Prompts\\TRANSLATION_PROMPT.txt")
 
             data = {
                 "model": "atlasai:9b",

@@ -2,14 +2,11 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-import requests
-import langdetect
-import json
 import os
 import logging
 
 from utils import *
-from model.transcript_decision import transcription_decision
+from app.model.transcript_decision import transcription_decision
 
 
 # Logging Configuration
@@ -20,7 +17,7 @@ logger = logging.getLogger(__name__)
 # Configuration
 OLLAMA_URL = "http://localhost:11434/api/chat"
 OLLAMA_URL_GENNERATION = "http://localhost:11434/api/generate"
-TEMP_DIR = Path("model\\temp")
+TEMP_DIR = Path("app\\model\\temp")
 TEMP_DIR.mkdir(exist_ok=True)
 
 
