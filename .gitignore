@@ -28,4 +28,4 @@ Lib/
 share/
 Scripts/
 pyvenv.cfg
-app/model/.idea
+.idea/
