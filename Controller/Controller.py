@@ -126,6 +126,7 @@ async def communicate_with_voice(record: UploadFile = File(...)):
         response_text = generate_response(user_input, keep_context=True)
         logger.info(f"Response generated: {response_text}")
         translated_text = generate_response(user_input)
+        logger.info(f"Translation generated: {translated_text}")
 
         return {"response": response_text, "translation": translated_text}
 

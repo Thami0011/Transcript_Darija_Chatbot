@@ -7,12 +7,15 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = GPT2LMHeadModel.from_pretrained("gpt2")
+
+
 def calculate_perplexity(text):
     """
     Compute the perplexity score of a text using GPT-2.
-    """
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    model = GPT2LMHeadModel.from_pretrained("gpt2")
+    """    
     encodings = tokenizer(text, return_tensors="pt")
     input_ids = encodings.input_ids
     with torch.no_grad():
