@@ -72,7 +72,7 @@ def generate_response(prompt: str, system_prompt: str) -> str:
 
 
 def detect_and_translate(message: str) -> str:
-    translation = generate_response(message, TRANSLATION_PROMPT)
+    translation = generate_response("Traduis cette phrase en francais : " + message, TRANSLATION_PROMPT)
     # translation = message
     # # Si la langue détectée est l’arabe, on applique une traduction personnalisée
     # if langdetect.detect(translation) == "ar":
