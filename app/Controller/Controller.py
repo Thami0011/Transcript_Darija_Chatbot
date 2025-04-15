@@ -85,6 +85,12 @@ class RequestMessage(BaseModel):
 
 
 # Endpoints
+
+@app.get("/")
+async def ping_test():
+    return {"message": "API is running"}
+
+
 @app.post("/chat")
 async def communicate_with_llama(request: RequestMessage):
     try:
