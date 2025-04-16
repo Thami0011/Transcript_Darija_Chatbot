@@ -30,33 +30,6 @@ As a basic understanding of how the app works, it accepts both text and voice me
 
 ---
 
-### ⚙️ Requirements
-
-> fastapi\==0.115.5
-> langdetect\==1.0.9
-> librosa\==0.10.2.post1
-> torch\==2.5.1
-> uvicorn\==0.32.1
-> transformers\==4.46.3
-> pickle # Pas de version spécifique car il est inclus dans Python
-> joblib\==1.4.2
-> pydantic\==2.10.1
-> datasets\==3.2.0
-> ffmpeg\==1.4
-> pandas\==2.2.3
-> numpy\==2.0.2
-> tqdm\==4.67.1
-> sentencepiece\==0.2.0
-> scipy\==1.14.1
-> scikit-learn\==1.5.2
-> openpyxl\==3.1.5
-> openai-whisper
-> python-multipart\==0.0.20
-> pathlib\==1.0.1
-> pydub\==0.25.1
-
----
-
 ## 📄 Installation
 
 ###### 📍 Local Installation
