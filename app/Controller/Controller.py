@@ -131,7 +131,7 @@ async def communicate_with_voice(record: UploadFile = File(...)):
         translated_text = generate_response(user_input)
         logger.info(f"Translation generated: {translated_text}")
 
-        return {"response": response_text, "translation": translated_text}
+        return {"response": response_text, "translation": translated_text, "transcription": user_input}
 
     except Exception as e:
         logger.error(f"Error processing voice message: {e}")

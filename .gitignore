@@ -29,3 +29,5 @@ share/
 Scripts/
 pyvenv.cfg
 .idea/
+Audios/
+*.wav
