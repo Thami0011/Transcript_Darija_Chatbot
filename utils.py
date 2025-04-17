@@ -44,7 +44,6 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
             response = requests.post(OLLAMA_URL, json=data)
             response.raise_for_status()
             context_history.append({"role": "assistant", "content": response.json().get("message", {}).get("content", "")})
-            print(context_history)
             return response.json().get("message", {}).get("content", "No content received.")
 
         except requests.exceptions.RequestException as e:
