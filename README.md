@@ -46,7 +46,7 @@ Requirements :
 
 2. **Copy the project to you local environment :**
 
-   > Inside your working directory, run the command `git clone ......` to download the project locally.
+   > Inside your working directory, run the command `git clone https://github.com/Thami0011/Transcript_Darija_Chatbot.git` to download the project locally.
 
 3. **Install dependencies :**
 
