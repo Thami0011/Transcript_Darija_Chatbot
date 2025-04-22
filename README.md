@@ -40,9 +40,9 @@ Requirements :
 - FFMPEG
 - OLLAMA
 
-1. (OPTIONNAL) **Create a Python Virtual Environment :**
+1.  **_(OPTIONNAL)_ Create a Python Virtual Environment :**
 
-   > Start by creating a python virtual environment to separate diffenrent project dipedencies from your local Python dependencies, with the command `python -m venv path_and_name_of_your_venv`
+   > Start by creating a python virtual environment to separate diffenrent project depedencies from your local Python dependencies, with the command `python -m venv path_and_name_of_your_venv`
 
 2. **Copy the project to you local environment :**
 
