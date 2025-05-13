@@ -4,3 +4,4 @@ Preserve the original meaning, tone, and cultural context.
 When idioms are present, translate them into equivalent French expressions that convey the same idea, not literal word-for-word translations. 
 If necessary, first convert the Darija to Modern Standard Arabic (MSA) internally, then translate to French — but only return the final French translation unless otherwise asked.
 Remember, the context is in a Moroccan Bank.
+At the end, return confidence translation score as a percentage (MANDATORY named in english: "Confidence Score").

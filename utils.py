@@ -1,4 +1,6 @@
 import requests
+from pathlib import Path
+import re
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
 OLLAMA_URL_GENERATION = "http://localhost:11434/api/generate"
@@ -30,7 +32,7 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
         try:
             # Ajoute le message système une seule fois
             if not context_history or context_history[0]["role"] != "system":
-                system_prompt = read_file("app\\Prompts\\MAIN_REQUEST_PROMPT.txt")
+                system_prompt = read_file(Path("app") / "Prompts" / "MAIN_REQUEST_PROMPT.txt")
                 context_history.insert(0, {"role": "system", "content": system_prompt})
             
             context_history.append({"role": "user", "content": prompt})
@@ -51,7 +53,8 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
 
     else:
         try:
-            system_prompt = read_file("app\\Prompts\\TRANSLATION_PROMPT.txt")
+            system_prompt = read_file(Path("app") / "Prompts" / "TRANSLATION_PROMPT.txt")
+            
 
             data = {
                 "model": "atlasai:9b",
@@ -62,7 +65,22 @@ def generate_response(prompt: str, keep_context: bool = False) -> str:
 
             response = requests.post(OLLAMA_URL_GENERATION, json=data)
             response.raise_for_status()
-            return response.json().get("response", "No response content.")
+            full_response = response.json().get("response", "No response content.")
+            before, confidence_score = regex_extract(full_response)
+            return before, confidence_score
 
         except requests.exceptions.RequestException as e:
             return f"[Error - No Context]: {e}"
+
+def regex_extract(text: str):
+    pattern = r'(Confidence Score|Score de Confiance)\s*[:：]?\s*(\d+(?:\.\d+)?)%'
+
+    match = re.search(pattern, text, re.IGNORECASE)
+    if match:
+        label = match.group(1)
+        confidence_score = match.group(2) + "%"
+        start, end = match.span()
+        before = text[:start].strip()
+        return before, confidence_score
+    else:
+        return text, None, ""  

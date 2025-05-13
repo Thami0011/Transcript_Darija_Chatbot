@@ -54,11 +54,11 @@ async def ping_test():
 async def communicate_with_llama(request: RequestMessage):
     try:
         # response_text = generate_response(request.prompt, keep_context=True)
-        translated_text = generate_response(request.prompt)
+        translated_text, confidence_score = generate_response(request.prompt)
         # logger.info(f"Response generated: {response_text}")
-        logger.info(f"Translation generated: {translated_text}")
+        logger.info(f"Translation generated: {translated_text}, confidence score: {confidence_score}")
         # return {"response": response_text, "translation": translated_text}
-        return {"translation": translated_text}
+        return {"translation": translated_text, "confidence_score": confidence_score}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -87,11 +87,11 @@ async def communicate_with_voice(record: UploadFile = File(...)):
         # Génération de réponse et traduction
         # response_text = generate_response(user_input, keep_context=True)
         # logger.info(f"Response generated: {response_text}")
-        translated_text = generate_response(user_input)
-        logger.info(f"Translation generated: {translated_text}")
+        translated_text, confidence_score = generate_response(user_input)
+        logger.info(f"Translation generated: {translated_text}, Confidence score: {confidence_score}, transcription: {user_input}")
 
         # return {"response": response_text, "translation": translated_text, "transcription": user_input}
-        return {"translation": translated_text, "transcription": user_input}
+        return {"translation": translated_text, "confidence_score": confidence_score,"transcription": user_input}
     except Exception as e:
         logger.error(f"Error processing voice message: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur traitement vocal : {str(e)}")

@@ -12,7 +12,7 @@ RUN apt-get update && \
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Now copy the app (after deps are installed to leverage Docker cache)
 COPY . .
